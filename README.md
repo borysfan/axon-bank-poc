@@ -24,6 +24,14 @@ export COMPOSE_CONVERT_WINDOWS_PATHS="true"
 Then you can set this variables in your system properties settings to have them after your machine restart.
 
 ## How to run
+1. Run MongoDB
+
+Execute following command: `docker run --name axon-bank-mongo -p 27017:27017 -d mongo`
+
+2. Run the application
+
 To run docker image you have to execute following command: 
 
 `docker run -it --name axon-bank-poc -p 8080:8080 axon-bank-poc`
+
+* To connect to docker image container run command: `docker exec mongo bash`
