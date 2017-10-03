@@ -18,7 +18,7 @@ public class Balance {
         return new Balance(value.subtract(amount.getValue()));
     }
 
-    public Balance enrease(Amount amount) {
+    public Balance increase(Amount amount) {
         return new Balance(value.add(amount.getValue()));
     }
 
@@ -28,6 +28,10 @@ public class Balance {
 
     public boolean canWithdrawn(Amount amount) {
         return this.value.compareTo(amount.getValue()) >= 0;
+    }
+
+    public Long asLong(){
+        return value.longValue();
     }
 
     @Override

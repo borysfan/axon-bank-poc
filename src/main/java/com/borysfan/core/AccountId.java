@@ -8,6 +8,10 @@ public class AccountId {
         this.accountNumber = accountNumber;
     }
 
+    public String asString() {
+        return accountNumber;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
