@@ -6,12 +6,20 @@ public class OverdraftLimit {
 
     private final BigDecimal value;
 
+    public OverdraftLimit(Long value) {
+        this(new BigDecimal(value));
+    }
+
     public OverdraftLimit(BigDecimal value) {
         this.value = value;
     }
 
     BigDecimal getValue() {
         return value;
+    }
+
+    public Long asLong() {
+        return value.longValue();
     }
 
     @Override

@@ -16,6 +16,14 @@ public class MoneyWithdrawnEvent {
         this.balance = balance;
     }
 
+    public AccountId getAccountId() {
+        return accountId;
+    }
+
+    public Amount getAmount() {
+        return amount;
+    }
+
     public Balance getBalance() {
         return balance;
     }

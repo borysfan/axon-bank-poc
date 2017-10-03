@@ -16,6 +16,10 @@ public class MoneyDepositedEvent {
         this.balance = balance;
     }
 
+    public AccountId getAccountId() {
+        return accountId;
+    }
+
     public Balance getBalance() {
         return balance;
     }
