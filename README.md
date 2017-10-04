@@ -28,10 +28,24 @@ Then you can set this variables in your system properties settings to have them 
 
 Execute following command: `docker run --name axon-bank-mongo -p 27017:27017 -d mongo`
 
-2. Run the application
+2. Run Rabbit-MQ
+Exchanging events
+Execute following command: `docker run -d -p 5672:5672 -p 15672:15672 -e RABBITMQ_PASS="mypass" tutum/rabbitmq`
+
+3. Run the application
 
 To run docker image you have to execute following command: 
 
 `docker run -it --name axon-bank-poc -p 8080:8080 axon-bank-poc`
 
 * To connect to docker image container run command: `docker exec mongo bash`
+
+CURL commands:
+1. Create account
+`curl -H "Content-Type: application/json" -X POST -d '{"accountNumber":"123","overdraft":"1000"}' http://localhost:8080/accounts`
+2. Deposit money
+`curl -H "Content-Type: application/json" -X POST -d '{"accountNumber":"123","amount":"100"}' http://localhost:8080/deposits`
+3. Withdraw money
+`curl -H "Content-Type: application/json" -X POST -d '{"accountNumber":"123","amount":"100"}' http://localhost:8080/withdraws`
+4. Account balance
+`curl -X GET http://localhost:8080/accounts/{id}`
