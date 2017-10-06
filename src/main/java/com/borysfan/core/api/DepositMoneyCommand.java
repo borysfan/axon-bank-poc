@@ -8,14 +8,20 @@ public class DepositMoneyCommand {
 
     @TargetAggregateIdentifier
     private final AccountId accountId;
+    private final String transactionId;
     private final Amount amount;
 
-    public DepositMoneyCommand(AccountId accountId, Amount amount) {
+    public DepositMoneyCommand(AccountId accountId, String transactionId, Amount amount) {
         this.accountId = accountId;
+        this.transactionId = transactionId;
         this.amount = amount;
     }
 
     public Amount getAmount() {
         return amount;
+    }
+
+    public String getTransactionId() {
+        return transactionId;
     }
 }

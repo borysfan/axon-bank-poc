@@ -8,14 +8,20 @@ public class WithdrawMoneyCommand {
 
     @TargetAggregateIdentifier
     private final AccountId accountId;
+    private final String transactionId;
     private final Amount amount;
 
-    public WithdrawMoneyCommand(AccountId accountId, Amount amount) {
+    public WithdrawMoneyCommand(AccountId accountId, String transactionId, Amount amount) {
         this.accountId = accountId;
+        this.transactionId = transactionId;
         this.amount = amount;
     }
 
     public Amount getAmount() {
         return amount;
+    }
+
+    public String getTransactionId() {
+        return transactionId;
     }
 }

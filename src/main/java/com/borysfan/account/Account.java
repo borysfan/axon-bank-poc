@@ -7,15 +7,19 @@ import com.borysfan.core.OverdraftLimitExceededException;
 import com.borysfan.core.api.*;
 import org.axonframework.commandhandling.CommandHandler;
 import org.axonframework.commandhandling.model.AggregateIdentifier;
+import org.axonframework.commandhandling.model.AggregateRoot;
 import org.axonframework.eventsourcing.EventSourcingHandler;
 import org.axonframework.spring.stereotype.Aggregate;
+import org.springframework.beans.factory.annotation.Autowired;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 import static org.axonframework.commandhandling.model.AggregateLifecycle.apply;
 
 @Aggregate
-public class Account {
+@AggregateRoot
+public class Account implements Serializable {
 
     @AggregateIdentifier
     private AccountId accountId;
@@ -24,19 +28,20 @@ public class Account {
 
     private OverdraftLimit overdraftLimit;
 
+    private SampleBean sampleBean;
+
     public Account() {
         //no-arg ctor
     }
 
-    @CommandHandler
-    public Account(CreateAccountCommand createAccountCommand) {
-        apply(new AccountCreatedEvent(createAccountCommand.getAccountId(), createAccountCommand.getOverdraftLimit()));
+    public Account(AccountId accountId, OverdraftLimit overdraftLimit) {
+        apply(new AccountCreatedEvent(accountId, overdraftLimit));
     }
 
     @CommandHandler
     public void handle(WithdrawMoneyCommand withdrawMoneyCommand) throws OverdraftLimitExceededException {
         if (balance.with(overdraftLimit).canWithdrawn(withdrawMoneyCommand.getAmount())) {
-            apply(new MoneyWithdrawnEvent(accountId, withdrawMoneyCommand.getAmount(), balance.decrease(withdrawMoneyCommand.getAmount())));
+            apply(new MoneyWithdrawnEvent(accountId, withdrawMoneyCommand.getTransactionId(), withdrawMoneyCommand.getAmount(), balance.decrease(withdrawMoneyCommand.getAmount())));
         } else {
             throw new OverdraftLimitExceededException();
         }
@@ -44,7 +49,7 @@ public class Account {
 
     @CommandHandler
     public void handle(DepositMoneyCommand depositMoneyCommand) {
-        apply(new MoneyDepositedEvent(accountId, depositMoneyCommand.getAmount(), this.balance.increase(depositMoneyCommand.getAmount())));
+        apply(new MoneyDepositedEvent(accountId, depositMoneyCommand.getTransactionId(), depositMoneyCommand.getAmount(), this.balance.increase(depositMoneyCommand.getAmount())));
     }
 
     @EventSourcingHandler
@@ -62,5 +67,30 @@ public class Account {
     @EventSourcingHandler
     public void on(MoneyDepositedEvent moneyDepositedEvent) {
         this.balance = moneyDepositedEvent.getBalance();
+    }
+
+    @Autowired
+    public void setSampleBean(SampleBean sampleBean) {
+        this.sampleBean = sampleBean;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Account account = (Account) o;
+
+        if (!accountId.equals(account.accountId)) return false;
+        if (!balance.equals(account.balance)) return false;
+        return overdraftLimit.equals(account.overdraftLimit);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = accountId.hashCode();
+        result = 31 * result + balance.hashCode();
+        result = 31 * result + overdraftLimit.hashCode();
+        return result;
     }
 }
