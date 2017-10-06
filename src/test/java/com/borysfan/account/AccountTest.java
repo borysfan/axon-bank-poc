@@ -15,7 +15,8 @@ public class AccountTest {
 
     @Before
     public void setUp() {
-        fixture = new AggregateTestFixture<Account>(Account.class);
+        fixture = new AggregateTestFixture<>(Account.class);
+        fixture.registerAnnotatedCommandHandler(new AccountCommandHandler(fixture.getRepository()));
     }
 
     @Test
@@ -38,8 +39,8 @@ public class AccountTest {
         Balance balance = new Balance(new BigDecimal(-200));
         //when
         fixture.given(new AccountCreatedEvent(accountId, overdraftLimit))
-                .when(new WithdrawMoneyCommand(accountId, amount))
-                .expectEvents(new MoneyWithdrawnEvent(accountId, amount, balance));
+                .when(new WithdrawMoneyCommand(accountId, "t1", amount))
+                .expectEvents(new MoneyWithdrawnEvent(accountId, "t1", amount, balance));
     }
 
     @Test
@@ -51,7 +52,7 @@ public class AccountTest {
 
         //when
         fixture.given(new AccountCreatedEvent(accountId, overdraftLimit))
-                .when(new WithdrawMoneyCommand(accountId, amount))
+                .when(new WithdrawMoneyCommand(accountId, "t1", amount))
                 .expectNoEvents()
                 .expectException(OverdraftLimitExceededException.class);
     }
@@ -63,8 +64,8 @@ public class AccountTest {
         OverdraftLimit overdraftLimit = new OverdraftLimit(new BigDecimal(1000));
 
         //when
-        fixture.given(new AccountCreatedEvent(accountId, overdraftLimit), new MoneyWithdrawnEvent(accountId, new Amount(999L), new Balance(-999L)))
-                .when(new WithdrawMoneyCommand(accountId, new Amount(2L)))
+        fixture.given(new AccountCreatedEvent(accountId, overdraftLimit), new MoneyWithdrawnEvent(accountId, "t1", new Amount(999L), new Balance(-999L)))
+                .when(new WithdrawMoneyCommand(accountId, "t1", new Amount(2L)))
                 .expectNoEvents()
                 .expectException(OverdraftLimitExceededException.class);
     }
@@ -77,8 +78,8 @@ public class AccountTest {
 
         //when
         fixture.given(new AccountCreatedEvent(accountId, overdraftLimit))
-                .when(new DepositMoneyCommand(accountId, new Amount(100L)))
-                .expectEvents(new MoneyDepositedEvent(accountId, new Amount(100L), new Balance(100L)));
+                .when(new DepositMoneyCommand(accountId, "t1", new Amount(100L)))
+                .expectEvents(new MoneyDepositedEvent(accountId, "t1", new Amount(100L), new Balance(100L)));
     }
 
 

@@ -49,3 +49,5 @@ CURL commands:
 `curl -H "Content-Type: application/json" -X POST -d '{"accountNumber":"123","amount":"100"}' http://localhost:8080/withdraws`
 4. Account balance
 `curl -X GET http://localhost:8080/accounts/{id}`
+5. Transfer money from A account to B account
+`curl -H "Content-Type: application/json" -X POST -d '{"fromAccountNumber":"123","toAccountNumber": "321", "amount":"100"}' http://localhost:8080/transactions`
