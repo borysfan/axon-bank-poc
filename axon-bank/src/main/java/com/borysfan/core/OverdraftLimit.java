@@ -36,4 +36,11 @@ public class OverdraftLimit {
     public int hashCode() {
         return value.hashCode();
     }
+
+    @Override
+    public String toString() {
+        return "OverdraftLimit{" +
+                "value=" + value +
+                '}';
+    }
 }
