@@ -1,0 +1,29 @@
+version: '3'
+services:
+  eureka-server:
+    image: axon-discovery-server
+    ports:
+      - "8761:8761"
+  rabbitmq:
+    image: tutum/rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      - RABBITMQ_PASS=mypass
+  mongodb:
+    image: mongo
+    ports:
+      - "27017:27017"
+  zuul-proxy:
+    image: zuul-proxy
+    ports:
+      - "9090:9090"
+    depends_on:
+      - eureka-server
+  axon-bank-poc:
+    image: axon-bank-poc
+    depends_on:
+      - rabbitmq
+      - mongodb
+      - eureka-server

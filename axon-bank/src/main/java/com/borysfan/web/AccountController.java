@@ -1,19 +1,23 @@
 package com.borysfan.web;
 
+import com.borysfan.Host;
 import com.borysfan.account.Account;
 import com.borysfan.core.AccountId;
 import com.borysfan.core.OverdraftLimit;
 import com.borysfan.core.api.CreateAccountCommand;
 import org.axonframework.commandhandling.gateway.CommandGateway;
-import org.axonframework.commandhandling.model.Aggregate;
 import org.axonframework.commandhandling.model.Repository;
-import org.axonframework.messaging.unitofwork.DefaultUnitOfWork;
-import org.axonframework.messaging.unitofwork.UnitOfWork;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
+
+import java.net.UnknownHostException;
 
 @RestController
 @RequestMapping("/accounts")
 public class AccountController {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(AccountController.class);
 
     private final AccountObjectRepository accountObjectRepository;
     private final Repository<Account> accountRepository;
@@ -26,13 +30,14 @@ public class AccountController {
     }
 
     @PostMapping
-    public void createNewAccount(@RequestBody NewAccountDto newAccountDto) {
+    public void createNewAccount(@RequestBody NewAccountDto newAccountDto) throws UnknownHostException {
+        LOGGER.info("REST createNewAccount {}", Host.getName());
         commandGateway.send(new CreateAccountCommand(new AccountId(newAccountDto.getAccountNumber()), new OverdraftLimit(newAccountDto.getOverdraft())));
     }
 
     @GetMapping("/{id}")
     public AccountObject details(@PathVariable("id") String id) {
-        //Aggregate<Account> aggregate = accountRepository.load(id);
+        LOGGER.info("REST details {}", Host.getName());
         return accountObjectRepository.findOne(id);
     }
 
