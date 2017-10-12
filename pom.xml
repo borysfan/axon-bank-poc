@@ -13,6 +13,8 @@
         <module>zuulproxy</module>
         <module>axon-bank</module>
         <module>axondiscoveryserver</module>
+        <module>axon-bank-stats</module>
+        <module>bank-api</module>
     </modules>
 
 </project>

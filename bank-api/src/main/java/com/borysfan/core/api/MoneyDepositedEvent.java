@@ -29,4 +29,8 @@ public class MoneyDepositedEvent {
     public Balance getBalance() {
         return balance;
     }
+
+    public Amount getAmount() {
+        return amount;
+    }
 }
