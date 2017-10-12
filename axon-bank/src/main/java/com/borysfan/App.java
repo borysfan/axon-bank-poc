@@ -41,7 +41,7 @@ public class App {
 
     @Bean
     public CommandRouter springCloudCommandRouter(DiscoveryClient discoveryClient) {
-        return new SpringCloudCommandRouter(discoveryClient, new AnnotationRoutingStrategy(UnresolvedRoutingKeyPolicy.RANDOM_KEY));
+        return new SpringCloudCommandRouter(discoveryClient, new AnnotationRoutingStrategy(UnresolvedRoutingKeyPolicy.ERROR));
     }
 
     @Bean
