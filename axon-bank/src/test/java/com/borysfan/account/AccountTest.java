@@ -82,5 +82,4 @@ public class AccountTest {
                 .expectEvents(new MoneyDepositedEvent(accountId, "t1", new Amount(100L), new Balance(100L)));
     }
 
-
 }

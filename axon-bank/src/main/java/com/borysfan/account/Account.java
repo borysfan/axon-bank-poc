@@ -17,7 +17,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.net.InetAddress;
 
 import static org.axonframework.commandhandling.model.AggregateLifecycle.apply;
 

@@ -2,7 +2,6 @@ package com.borysfan.core.api;
 
 import com.borysfan.core.AccountId;
 import com.borysfan.core.OverdraftLimit;
-import org.axonframework.commandhandling.TargetAggregateIdentifier;
 
 public class CreateAccountCommand {
 

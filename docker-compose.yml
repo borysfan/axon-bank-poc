@@ -21,9 +21,13 @@ services:
       - "9090:9090"
     depends_on:
       - eureka-server
-  axon-bank-poc:
-    image: axon-bank-poc
+  axon-bank:
+    image: axon-bank
     depends_on:
       - rabbitmq
       - mongodb
       - eureka-server
+  axon-bank-stats:
+    image: axon-bank-stats
+    depends_on:
+      - axon-bank
