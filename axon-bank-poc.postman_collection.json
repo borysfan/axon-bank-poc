@@ -1,0 +1,102 @@
+{
+	"variables": [],
+	"info": {
+		"name": "axon-bank-poc",
+		"_postman_id": "9cd7783d-0519-0876-c75c-10ab73f30671",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "create account",
+			"request": {
+				"url": "192.168.99.100:9090/api/bank/accounts",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"accountNumber\":\"1\",\"overdraft\":\"1000\"}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "account details",
+			"request": {
+				"url": "192.168.99.100:9090/api/bank/accounts/1",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "deposit money",
+			"request": {
+				"url": "192.168.99.100:9090/api/bank/deposits",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"accountNumber\":\"1\",\"amount\":\"100\"}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "withdraw money",
+			"request": {
+				"url": "192.168.99.100:9090/api/bank/withdraws",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"accountNumber\":\"1\",\"amount\":\"100\"}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "transfer money",
+			"request": {
+				"url": "192.168.99.100:9090/api/bank/transactions",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"fromAccountNumber\":\"1\",\"toAccountNumber\": \"2\", \"amount\":\"100\"}"
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}
