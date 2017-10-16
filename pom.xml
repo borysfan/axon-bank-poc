@@ -10,9 +10,9 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>zuulproxy</module>
+        <module>zuul-proxy</module>
         <module>axon-bank</module>
-        <module>axondiscoveryserver</module>
+        <module>axon-discovery-server</module>
         <module>axon-bank-stats</module>
         <module>bank-api</module>
     </modules>
