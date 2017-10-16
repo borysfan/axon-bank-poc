@@ -8,7 +8,7 @@ Simple axon and spring application
 ## How to build
 To build an application just execute command: `mvn clean install`
 * There can be some problem with building docker image. Docker maven plugin tries to connect to docker. In Windows 8 some problems can occure with connection details. 
-Plugin tries to connecto to `localhost:2375` by default. We can ovveride this value by setting environment variables. To do that run following command:
+Plugin tries to connecto to `localhost:2375` by default. We can override this value by setting environment variables. To do that run following command:
 `docker-machine env`
 
 It gives output like:
@@ -24,22 +24,20 @@ export COMPOSE_CONVERT_WINDOWS_PATHS="true"
 Then you can set this variables in your system properties settings to have them after your machine restart.
 
 ## How to run
-1. Run MongoDB
+1. Make sure that all components has been successfully built. You should find all images in you local images repository. Just type command `docker images` and you should something like that: 
+```
+REPOSITORY              TAG                 IMAGE ID            CREATED             SIZE
+axon-bank-stats         latest              56ab8113b1af        2 days ago          684MB
+axon-discovery-server   latest              6308f0048934        2 days ago          685MB
+axon-bank               latest              bd54e509ac38        2 days ago          689MB
+zuul-proxy              latest              453d44e568c6        2 days ago          683MB
+```
+2. Execute following command: `docker-compose up`. This command will start all necessary components in proper order
 
-Execute following command: `docker run --name axon-bank-mongo -p 27017:27017 -d mongo`
+## How to stop
+If you want to stop application and their all components just press CTRL + C and then execute command: `docker-compose down`. 
 
-2. Run Rabbit-MQ
-Exchanging events
-Execute following command: `docker run -d -p 5672:5672 -p 15672:15672 -e RABBITMQ_PASS="mypass" tutum/rabbitmq`
-
-3. Run the application
-
-To run docker image you have to execute following command: 
-
-`docker run -it --name axon-bank-poc -p 8080:8080 axon-bank-poc`
-
-* To connect to docker image container run command: `docker exec mongo bash`
-
+## Exposed endpoints
 CURL commands:
 1. Create account
 `curl -H "Content-Type: application/json" -X POST -d '{"accountNumber":"123","overdraft":"1000"}' http://localhost:8080/accounts`
