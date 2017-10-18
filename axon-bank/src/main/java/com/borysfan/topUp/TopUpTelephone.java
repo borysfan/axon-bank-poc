@@ -21,7 +21,7 @@ public class TopUpTelephone {
     private boolean completed;
 
     @CommandHandler
-    public void handle(RequestTopUpTelephoneCommand command) {
+    public TopUpTelephone(RequestTopUpTelephoneCommand command) {
         apply(new TelephoneTopUpRequestedEvent(command.getTransactionId(), command.getAccountId(), command.getAmount(), command.getPhoneNumber()));
     }
 
