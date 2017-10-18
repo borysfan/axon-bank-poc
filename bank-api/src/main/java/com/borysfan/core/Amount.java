@@ -14,8 +14,24 @@ public class Amount {
         this.value = value;
     }
 
+    public Amount subtract(Amount amount) {
+        return new Amount(value.subtract(amount.value));
+    }
+
     BigDecimal getValue() {
         return value;
+    }
+
+    public boolean isGreater(Amount amount) {
+        return value.compareTo(amount.value) > 0;
+    }
+
+    public boolean isLess(Amount amount) {
+        return value.compareTo(amount.value) < 0;
+    }
+
+    public Long asLong(){
+        return value.longValue();
     }
 
     @Override
