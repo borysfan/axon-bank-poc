@@ -18,6 +18,7 @@ public class EchoHandler {
         LOGGER.info("Money deposited {}", event.getAmount());
     }
 
+    @EventHandler
     public void on(MoneyWithdrawnEvent event) {
         LOGGER.info("Money withdrawn {}", event.getAmount());
     }
