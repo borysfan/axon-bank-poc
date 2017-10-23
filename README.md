@@ -52,3 +52,10 @@ CURL commands:
 `curl -X GET http://localhost:8080/accounts/{id}`
 5. Transfer money from A account to B account
 `curl -H "Content-Type: application/json" -X POST -d '{"fromAccountNumber":"123","toAccountNumber": "321", "amount":"100"}' http://localhost:8080/transactions`
+
+## Development
+For development purposes you just need mongo database and rabbit mq server. To run this two components just type:
+`docker-compose -f docker-compose-dev.yml up`
+
+If you want to turn them down: `docker-compose -f docker-compose-dev.yml down`
+ 
