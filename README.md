@@ -57,5 +57,5 @@ CURL commands:
 For development purposes you just need mongo database and rabbit mq server. To run this two components just type:
 `docker-compose -f docker-compose-dev.yml up`
 
-If you want to turn them down: `docker-compose -f docker-compose-dev.yml down`
+If you want to turn them down: `docker-compose -f docker-compose-dev.yml `
  
