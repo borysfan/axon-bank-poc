@@ -10,6 +10,5 @@ public class EchoConfiguration {
     @Autowired
     public void configure(EventHandlingConfiguration configuration) {
         configuration.registerTrackingProcessor("echo");
-
     }
 }
